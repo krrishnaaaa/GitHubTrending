@@ -1,5 +1,5 @@
 package com.pcsalt.example.githubtrending.model
 
-data class SearchSuccessEvent(val data: Any?)
+data class UserRepoSuccessEvent(val data: List<RepoDetail>?)
 
-data class SearchFailureEvent(val errorMessage: String)
+data class UserRepoFailureEvent(val errorMessage: String)

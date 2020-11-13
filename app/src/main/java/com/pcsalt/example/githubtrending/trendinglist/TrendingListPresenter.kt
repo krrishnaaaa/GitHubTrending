@@ -1,8 +1,8 @@
 package com.pcsalt.example.githubtrending.trendinglist
 
 import android.util.Log
-import com.pcsalt.example.githubtrending.model.SearchFailureEvent
-import com.pcsalt.example.githubtrending.model.SearchSuccessEvent
+import com.pcsalt.example.githubtrending.model.UserRepoFailureEvent
+import com.pcsalt.example.githubtrending.model.UserRepoSuccessEvent
 import com.pcsalt.example.githubtrending.network.RepoService
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -20,16 +20,16 @@ class TrendingListPresenter : TrendingListPresenterContract.Presenter {
 
     override fun search() {
         val repoService = RepoService()
-        repoService.searchRepo("", "", "")
+        repoService.getUserRepo("krrishnaaaa")
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public fun onSearchSuccess(data: SearchSuccessEvent) {
+    public fun onSearchSuccess(data: UserRepoSuccessEvent) {
         Log.d("presenter", "data: $data")
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public fun onSearchFailure(data: SearchFailureEvent) {
+    public fun onSearchFailure(data: UserRepoFailureEvent) {
         Log.d("presenter", "error message: $data")
     }
 }
