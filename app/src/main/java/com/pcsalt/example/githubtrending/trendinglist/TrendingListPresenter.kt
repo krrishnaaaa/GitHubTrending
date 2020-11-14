@@ -28,7 +28,7 @@ class TrendingListPresenter : TrendingListPresenterContract.Presenter {
         if (isAttached()) {
             view?.let {
                 val repoService = RepoService()
-                repoService.getUserRepo(it.getUsername())
+                repoService.searchRepo("user:" + it.getUsername())
             }
         }
     }

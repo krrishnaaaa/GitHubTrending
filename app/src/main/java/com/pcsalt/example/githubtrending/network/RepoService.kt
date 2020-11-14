@@ -2,6 +2,7 @@ package com.pcsalt.example.githubtrending.network
 
 import android.util.Log
 import com.pcsalt.example.githubtrending.model.RepoDetail
+import com.pcsalt.example.githubtrending.model.SearchRepo
 import com.pcsalt.example.githubtrending.model.UserRepoFailureEvent
 import com.pcsalt.example.githubtrending.model.UserRepoSuccessEvent
 import org.greenrobot.eventbus.EventBus
@@ -12,6 +13,23 @@ import retrofit2.Response
 class RepoService : IRepoService {
     private companion object {
         private const val TAG = "RepoService"
+    }
+
+    override fun searchRepo(query: String, order: String, sort: String) {
+        NetworkService.getService().searchRepositories(query, order, sort)
+            .enqueue(object : Callback<SearchRepo> {
+                override fun onResponse(call: Call<SearchRepo>, response: Response<SearchRepo>) {
+                    Log.d(TAG, "onResponse() called with: call = $call, response = $response")
+                    Log.d(TAG, "success ${response.body()}")
+                    EventBus.getDefault().post(UserRepoSuccessEvent(response.body()?.items))
+                }
+
+                override fun onFailure(call: Call<SearchRepo>, t: Throwable) {
+                    Log.d(TAG, "onFailure() called with: call = $call, t = $t")
+                    EventBus.getDefault()
+                        .post(UserRepoFailureEvent(t.message ?: "Some error occurred"))
+                }
+            })
     }
 
     override fun getUserRepo(username: String) {

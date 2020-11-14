@@ -1,6 +1,7 @@
 package com.pcsalt.example.githubtrending.network
 
 import com.pcsalt.example.githubtrending.model.RepoDetail
+import com.pcsalt.example.githubtrending.model.SearchRepo
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -13,7 +14,7 @@ interface GithubService {
         @Query("q") q: String,
         @Query("order") order: String,
         @Query("sort") sort: String
-    ): Call<Any>
+    ): Call<SearchRepo>
 
     @GET("users/{username}/repos")
     fun getUserRepos(@Path("username") username: String): Call<List<RepoDetail>>
