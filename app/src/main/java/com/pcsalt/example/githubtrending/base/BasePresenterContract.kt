@@ -6,7 +6,8 @@ interface BasePresenterContract {
     }
 
     interface IPresenter {
-        fun init()
+        fun init(view: IView?)
         fun destroy()
+        fun isAttached(): Boolean
     }
 }

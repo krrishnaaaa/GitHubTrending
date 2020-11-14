@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">GitHub Trending</string>
+    <string name="desc_open_web">Open GitHub for more details</string>
+    <string name="desc_open_details">Open details</string>
 </resources>
