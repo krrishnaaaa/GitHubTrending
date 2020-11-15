@@ -6,5 +6,5 @@ interface IRepoService {
 
     fun getUserRepo(username: String)
 
-    fun getRepoDetail()
+    fun getRepoDetail(detailUrl: String)
 }

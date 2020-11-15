@@ -1,10 +1,7 @@
 package com.pcsalt.example.githubtrending.network
 
 import android.util.Log
-import com.pcsalt.example.githubtrending.model.RepoDetail
-import com.pcsalt.example.githubtrending.model.SearchRepo
-import com.pcsalt.example.githubtrending.model.UserRepoFailureEvent
-import com.pcsalt.example.githubtrending.model.UserRepoSuccessEvent
+import com.pcsalt.example.githubtrending.model.*
 import org.greenrobot.eventbus.EventBus
 import retrofit2.Call
 import retrofit2.Callback
@@ -52,7 +49,20 @@ class RepoService : IRepoService {
             })
     }
 
-    override fun getRepoDetail() {
+    override fun getRepoDetail(detailUrl: String) {
+        NetworkService.getService().getRepoDetail(detailUrl)
+            .enqueue(object : Callback<RepoDetail> {
+                override fun onResponse(call: Call<RepoDetail>, response: Response<RepoDetail>) {
+                    Log.d(TAG, "onResponse() called with: call = $call, response = $response")
+                    Log.d(TAG, "success ${response.body()}")
+                    EventBus.getDefault().post(RepoDetailSuccessEvent(response.body()))
+                }
 
+                override fun onFailure(call: Call<RepoDetail>, t: Throwable) {
+                    Log.d(TAG, "onFailure() called with: call = $call, t = $t")
+                    EventBus.getDefault()
+                        .post(RepoDetailFailureEvent(t.message ?: "Some error occurred"))
+                }
+            })
     }
 }
